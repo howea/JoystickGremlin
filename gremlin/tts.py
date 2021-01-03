@@ -74,4 +74,6 @@ def text_substitution(text):
     """
     eh = event_handler.EventHandler()
     text = text.replace("${current_mode}", eh.active_mode)
+    for variable, value in eh.variables.items():
+        text = text.replace("${" + variable + "}", value)
     return text

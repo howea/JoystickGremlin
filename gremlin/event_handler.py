@@ -352,6 +352,9 @@ class EventHandler(QtCore.QObject):
         self._event_lookup = {}
         self._active_mode = None
         self._previous_mode = None
+        self.variables = {"var1": "my own variable", "var2": "my second variable"}
+        self.clear_variable("var2")
+        self.set_variable("var2", "my second variable")
 
     @property
     def active_mode(self):
@@ -474,6 +477,15 @@ class EventHandler(QtCore.QObject):
     def clear(self):
         """Removes all attached callbacks."""
         self.callbacks = {}
+
+    def set_variable(self, variable, value):
+        # FIXME: sanitize parameters
+        self.variables[variable] = value
+
+    def clear_variable(self, variable):
+        # FIXME: sanitize parameters
+        if variable in self.variables:
+            del self.variables[variable]
 
     @QtCore.pyqtSlot(Event)
     def process_event(self, event):
